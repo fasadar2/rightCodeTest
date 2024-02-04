@@ -8,8 +8,13 @@ import {HttpClient, HttpClientModule, HttpHandler} from "@angular/common/http";
 import {ItemComponent} from "./loader/item/item.component";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from "@angular/material/button";
-import {ActivatedRoute, RouterLink, RouterOutlet} from "@angular/router";
+import { RouterLink } from "@angular/router";
 import {ItemEditComponent} from "./itemEdit/item-edit.component";
+import {AppRoutingModule} from "./app-routing.module";
+import {MatInputModule} from "@angular/material/input";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MatSelectModule} from "@angular/material/select";
+
 
 @NgModule({
   declarations: [
@@ -24,10 +29,13 @@ import {ItemEditComponent} from "./itemEdit/item-edit.component";
     BrowserAnimationsModule,
     MatCardModule,
     MatButtonModule,
-    RouterLink,
-    RouterOutlet
+    AppRoutingModule,
+    MatInputModule,
+    FormsModule,
+    MatSelectModule,
+    ReactiveFormsModule
   ],
-  providers: [ItemService,ActivatedRoute],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

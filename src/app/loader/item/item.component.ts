@@ -1,25 +1,35 @@
-import {Component, HostListener, Inject, Input, OnInit} from "@angular/core";
+import {Component,  Injectable, Input, OnInit} from "@angular/core";
 import {Item} from "../../models/item";
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, Router, Routes} from "@angular/router";
+import {ItemService} from "../../services/item-service";
+
+
 
 @Component({
   selector: 'app-item',
   templateUrl: './item.component.html',
   styleUrls: ['./item.component.css']
 })
-
 export class ItemComponent implements OnInit{
-  @Input() items: Item[] | undefined = undefined;
-  constructor(private router: Router,private activatedRoute:ActivatedRoute) {}
+  @Input() item: Item | undefined;
+  constructor(private routing:Router,activatedRouter:ActivatedRoute,private itemService:ItemService) {
+  }
   ngOnInit() {
-    console.log(this.items)
+    console.log(this.item)
   }
 
-  itemclick(item:Item) {
-    this.router.navigate(["item/edit"], {
-      queryParams: {
-        item: item
-      },
-    })
+  itemclick() {
+    if (this.item != undefined)
+    {
+      localStorage.setItem("id",this.item.id)
+      localStorage.setItem("name",this.item.name.toString())
+      localStorage.setItem("adress",this.item.adress.toString())
+      localStorage.setItem("mark",this.item.mark.toString())
+      localStorage.setItem("comment",this.item.comment.toString())
+    }
+
+    this.routing.navigate(['item/edit'])
   }
+
 }
+//[routerLink]="['item/edit']"

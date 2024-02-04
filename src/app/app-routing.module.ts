@@ -6,11 +6,10 @@ import {ItemEditComponent} from "./itemEdit/item-edit.component";
 const routes: Routes = [
   {path: "item", component: LoaderComponent},
   {path: "item/edit", component: ItemEditComponent},
-  {path: "*", redirectTo: "item"},
+  {path: "**", redirectTo: "item"},
 ];
-
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {enableTracing: true, scrollPositionRestoration: 'enabled'})],
   exports: [RouterModule]
 })
 export class AppRoutingModule {

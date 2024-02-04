@@ -5,7 +5,47 @@
   <title>Title</title>
 </head>
 <body>
-ХУй
+<div *ngIf="item">
 
+  <mat-card class="card"
+            [ngStyle]="{'width': '50%','height': 'auto', 'flex-direction': 'column','align-items': 'center',
+            'border-radius': 'var(--mdc-elevated-card-container-shape, var(--mdc-shape-medium, 16px))', 'margin-bottom':'2%','margin-left':'2%'}">
+    <mat-card-header>
+      <mat-card-title>{{item.name}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="container"
+                      [ngStyle]="{'width': 'auto','height': '50%','display': 'flex', 'flex-direction': 'column','align-items': 'left'}">
+
+      <mat-form-field class="example-form-field" >
+        <mat-label>Адрес</mat-label>
+        <input matInput type="text"[(ngModel)]="item.adress" required>
+        <mat-error *ngIf="required.errors?.['required']">Без адреся нелзя</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Комментарий</mat-label>
+        <mat-select [(value)] = "item.comment" [(ngModel)]="item.comment">
+          <mat-option value="Хорошо">Хорошо</mat-option>
+          <mat-option value="Плохо">Плохо</mat-option>
+          <mat-option value="Удовлетворительно">Удовлетворительно</mat-option>
+          <mat-option value="Отлично">Отлично</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <mat-label>Оценка</mat-label>
+          <input matInput #mark maxlength="1"  [(ngModel)]="item.mark" required>
+          <mat-error *ngIf="required.errors?.['required']">Без оценки нелзя</mat-error>
+        </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions  *ngIf="required.errors?.['required']"  >
+      <button mat-button color="primary"  [disabled]="!item.mark || !item.adress" (click)="editItemClick()">Сохранить</button>
+
+    </mat-card-actions>
+  </mat-card>
+</div>
+<div *ngIf="!item">
+
+</div>
 </body>
 </html>
