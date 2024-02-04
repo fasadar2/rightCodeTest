@@ -1,0 +1,21 @@
+<div class="container">
+  <div *ngIf="!item" class="container">
+    <div class="row">
+      <div id="loader">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="loading"></div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="item" class="container">
+    <app-item [items]="item"></app-item>
+  </div>
+</div>
