@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
@@ -21,9 +20,10 @@
 
 
     <div><strong>Оценка: </strong> {{item?.mark}}</div>
-    <div><strong>Комментарий: </strong>
-      <div>{{item?.comment}}</div>
-      </div>
+    <div>
+      <strong>Комментарий: </strong>
+      {{item?.comment}}
+    </div>
       </mat-card-content>
         <mat-card-actions  >
           <button mat-button color="primary"   (click)="itemclick()">Редактировать</button>
@@ -35,4 +35,4 @@
 
 
 </body>
-</html>
+

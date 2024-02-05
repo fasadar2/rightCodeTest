@@ -1,9 +1,9 @@
-import {Component, Input, OnInit} from "@angular/core";
+import {Component,  OnInit} from "@angular/core";
 import {Item} from "../models/item";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ItemService} from "../services/item-service";
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {mark} from "@angular/compiler-cli/src/ngtsc/perf/src/clock";
+import {FormControl, FormGroup,Validators} from "@angular/forms";
+
 @Component({
   selector: 'app-item-edit',
   templateUrl: './item-edit.component.html',
@@ -12,41 +12,39 @@ import {mark} from "@angular/compiler-cli/src/ngtsc/perf/src/clock";
 
 export class ItemEditComponent implements OnInit{
   item:Item | undefined
-  adress:string | undefined
-  mark:number | undefined
-  comment:string | undefined
-  required = new FormControl('', [Validators.required]);
+  myForm : FormGroup = new FormGroup({
+
+    "adress": new FormControl("", Validators.required),
+    "comment": new FormControl("", [
+      Validators.pattern(/^(Хорошо|Плохо|Удовлетворительно|Отлично)$/),
+      Validators.required,
+    ]),
+    "mark": new FormControl("", Validators.pattern("[2-5]{1}")),
+  });
   constructor(private _Activatedroute: ActivatedRoute,private itemService: ItemService,private routing:Router) {
   }
   ngOnInit() {
 
-    this.item = new Item(localStorage.getItem("id") || "",
-      localStorage.getItem("name") || "",
-      localStorage.getItem("adress") || "",
-      localStorage.getItem("comment") || "",
-      Number(localStorage.getItem("mark") || 0))
-    if(this.item.id == "")
+    this.item = this.itemService.getTempItem()
+    if(this.item === undefined)
     {
       this.routing.navigate(['item'])
     }
     else
     {
-      this.comment = this.item.comment
-      this.adress = this.item.adress
-      this.mark = this.item.mark
+      this.myForm.setValue({adress:this.item.adress,comment:this.item.comment,mark:this.item.mark})
     }
   }
-  editItemClick() {
-    if(this.item?.adress != this.adress || this.item?.mark != this.mark || this.item?.comment != this.comment)
+  onFormSubmit(): void {
+    if(this.myForm.dirty)
     {
       this.itemService.setItem(this.item)
-      localStorage.setItem("isUpdate","1")
+      this.itemService.isNotChanged = false
     }
     else
     {
-      localStorage.setItem("isUpdate","0")
+      this.itemService.isNotChanged = true
     }
-      this.routing.navigate(['item'])
+    this.routing.navigate(['item'])
   }
-
 }

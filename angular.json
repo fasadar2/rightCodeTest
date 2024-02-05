@@ -67,10 +67,6 @@
               "browserTarget": "testRigthcode:build:development"
             }
           },
-          "options": {
-            "browserTarget": "project-name:build",
-            "proxyConfig": "proxy.conf.json"
-          },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {

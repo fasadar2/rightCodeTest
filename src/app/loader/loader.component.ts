@@ -1,8 +1,8 @@
 import {Component,OnInit} from '@angular/core';
 import {ItemService} from "../services/item-service";
 import {Item} from "../models/item";
-import {Observable, Subscription, timeout} from "rxjs";
-import {AjaxResponse} from "rxjs/ajax";
+import {Subscription} from "rxjs";
+
 
 @Component({
   selector: 'app-loader',
@@ -14,37 +14,25 @@ export class LoaderComponent implements OnInit{
   sub : Subscription | undefined
   constructor(private itemService: ItemService) { }
   getItem(){
-   if (localStorage.getItem("isUpdate") == "0")
+   if (this.itemService.isNotChanged)
    {
-     this.item = new Item(localStorage.getItem("id") || "",
-       localStorage.getItem("name") || "",
-       localStorage.getItem("adress") || "",
-       localStorage.getItem("comment") || "",
-       Number(localStorage.getItem("mark") || 0))
+     this.item = this.itemService.getTempItem()
+     console.log("Ничего не поменялось, адыхаем")
    }
    else
    {
      this.sub = this.itemService.getItem().subscribe({
        next: _ => {
-         console.log(_)
-         this.item = _.response
+         this.item = _
        }
      })
+     this.itemService.isNotChanged = true
 
    }
-    if( this.item != undefined)
-    {
-      localStorage.setItem("id",this.item.id)
-      localStorage.setItem("name",this.item.name.toString())
-      localStorage.setItem("adress",this.item.adress.toString())
-      localStorage.setItem("mark",this.item.mark.toString())
-      localStorage.setItem("comment",this.item.comment.toString())
-    }
   }
 
   ngOnInit():void {
    this.getItem()
-    console.log(this.item)
   }
   ngOnDestroy():void
   {

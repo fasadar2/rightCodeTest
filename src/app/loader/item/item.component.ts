@@ -1,6 +1,6 @@
-import {Component,  Injectable, Input, OnInit} from "@angular/core";
+import {Component, Input, OnInit} from "@angular/core";
 import {Item} from "../../models/item";
-import {ActivatedRoute, Router, Routes} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {ItemService} from "../../services/item-service";
 
 
@@ -15,19 +15,14 @@ export class ItemComponent implements OnInit{
   constructor(private routing:Router,activatedRouter:ActivatedRoute,private itemService:ItemService) {
   }
   ngOnInit() {
-    console.log(this.item)
+
   }
 
   itemclick() {
     if (this.item != undefined)
     {
-      localStorage.setItem("id",this.item.id)
-      localStorage.setItem("name",this.item.name.toString())
-      localStorage.setItem("adress",this.item.adress.toString())
-      localStorage.setItem("mark",this.item.mark.toString())
-      localStorage.setItem("comment",this.item.comment.toString())
+      this.itemService.setTempItem(this.item)
     }
-
     this.routing.navigate(['item/edit'])
   }
 
