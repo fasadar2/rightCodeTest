@@ -36,8 +36,10 @@ export class ItemEditComponent implements OnInit{
     }
   }
   onFormSubmit(): void {
-    if(this.myForm.dirty)
+    if(this.myForm.dirty && this.item != undefined)
     {
+      this.item.adress = this.myForm.value['adress']
+      this.item.mark = this.myForm.value['mark']
       this.itemService.setItem(this.item)
       this.itemService.isNotChanged = false
     }
